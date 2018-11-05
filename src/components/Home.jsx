@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { MenuIcon } from "@material-ui/icons/Menu";
 
-class Hello extends React.Component {
+class Home extends React.Component {
   render() {
     console.log(this.props);
     return (
@@ -22,17 +22,16 @@ class Hello extends React.Component {
               aa
             </Typography>
             <Button color="inherit">Hello World</Button>
+            <button
+              className="button is-primary"
+              onClick={() => this.props.wp_get()}
+            >
+              wp_get
+            </button>
             <IconButton>aaa</IconButton>
           </Toolbar>
         </AppBar>
         <Link to={`/hello2`}>hello2</Link>
-        <button
-          className="button is-primary"
-          onClick={() => this.props.increments("aaaaaaaa")}
-        >
-          CLICKED {this.props.count} TIMES
-          {this.props.text}
-        </button>
         <Button variant="contained" color="primary">
           Hello World
         </Button>
@@ -40,4 +39,4 @@ class Hello extends React.Component {
     );
   }
 }
-export default Hello;
+export default Home;
