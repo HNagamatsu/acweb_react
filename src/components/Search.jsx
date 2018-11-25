@@ -29,22 +29,26 @@ const media = "wp:featuredmedia";
 //components
 import Header from "components/Header";
 
-class Home extends React.Component {
+class Search extends React.Component {
   getSnapshotBeforeUpdate(props) {
     console.log(props);
   }
   componentDidMount() {
-    this.props.wp_get();
+    this.props.wp_search("ようこそ");
   }
+
+  handleSearch = () => {
+    this.props.wp_search("ようこそ");
+  };
   render() {
     console.log(this.props);
     return (
       <div className="container">
-        <Header />
+        <Header action={this.handleSearch} params="" />
         <Grid container justify="center" spacing={40} style={{ marginTop: 40 }}>
           <Grid>
-            {this.props.wp.data.length
-              ? this.props.wp.data.map(item => (
+            {this.props.wpSearch.data.length
+              ? this.props.wpSearch.data.map(item => (
                   <Card style={{ maxWidth: 800 }}>
                     <Link to={"/detail/" + item.id}>
                       <CardActionArea>
@@ -92,4 +96,4 @@ class Home extends React.Component {
     );
   }
 }
-export default Home;
+export default Search;

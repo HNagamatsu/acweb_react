@@ -1,10 +1,6 @@
 import { handleActions } from "redux-actions";
 
-import {
-  WP_GET_LIST,
-  WP_GET_LIST_SUCCESS,
-  WP_GET_LIST_FAILE
-} from "actions/wp";
+import { WP_SEARCH, WP_SEARCH_SUCCESS, WP_SEARCH_FAILE } from "actions/wp";
 // 初期ステート設定
 const initialState = {
   loading: false,
@@ -12,15 +8,15 @@ const initialState = {
   data: []
 };
 
-const wp = handleActions(
+const wpSearch = handleActions(
   {
-    WP_GET_LIST: (state, action) => {
+    WP_SEARCH: (state, action) => {
       return {
         ...state,
         loading: true
       };
     },
-    WP_GET_LIST_SUCCESS: (state, action) => {
+    WP_SEARCH_SUCCESS: (state, action) => {
       console.log(action.payload);
       return {
         ...state,
@@ -28,7 +24,7 @@ const wp = handleActions(
         loading: true
       };
     },
-    WP_GET_LIST_FAILE: (state, action) => {
+    WP_SEARCH_FAILE: (state, action) => {
       return {
         ...state,
         data: [],
@@ -40,4 +36,4 @@ const wp = handleActions(
   initialState
 );
 
-export default wp;
+export default wpSearch;

@@ -4,7 +4,7 @@ import { wp_get } from "actions/wp";
 
 export default connect(
   state => ({
-    wp: state.wpa
+    wp: state.wp
   }),
   { wp_get }
 )(Home);
