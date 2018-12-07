@@ -2,169 +2,128 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Button, AppBar, Toolbar, Typography } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import IconButton from "@material-ui/core/IconButton";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import Avatar from "@material-ui/core/Avatar";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import StarBorder from "@material-ui/icons/StarBorder";
-import Collapse from "@material-ui/core/Collapse";
 import TextField from "@material-ui/core/TextField";
+import SearchIcon from "@material-ui/icons/Search";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
 const media = "wp:featuredmedia";
+import {
+  cssHeader,
+  cssSearchButton,
+  cssButton,
+  cssInput,
+  cssLogo
+} from "./header.css";
 
 class Header extends Component {
-  state = {
-    isOpenDrawer: false,
-    isOpenArea: false,
-    isOpenTokyo: false,
-    isOpenSkill: false
-  };
-  toggleDrawer = () => {
-    this.setState(state => ({ isOpenDrawer: !state.isOpenDrawer }));
-  };
-  toggleAreaAcordion = () => {
-    this.setState(state => ({ isOpenArea: !state.isOpenArea }));
-  };
-  toggleTokyoAcordion = () => {
-    this.setState(state => ({ isOpenTokyo: !state.isOpenTokyo }));
-  };
-  toggleSkillAcordion = () => {
-    this.setState(state => ({ isOpenSkill: !state.isOpenSkill }));
-  };
-
   render() {
     console.log(this.props);
-    const sideList = (
-      <div
-        style={{
-          width: 300
-        }}
-      >
-        <List>
-          <ListItem button onClick={this.toggleAreaAcordion}>
-            <ListItemText primary={"地域"} />
-            {this.state.isOpenArea ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Divider />
-        </List>
-        <Collapse in={this.state.isOpenArea} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem button>
-              <ListItemText
-                inset
-                primary="東京都"
-                onClick={this.toggleTokyoAcordion}
-              />
-              {this.state.isOpenTokyo ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Divider />
-          </List>
-          <Collapse in={this.state.isOpenTokyo} timeout="auto" unmountOnExit>
-            {this.props.wpCategories.data.map(element => {
-              return (
-                <List component="div" disablePadding>
-                  <Link to={"/category/" + element.id}>
-                    <ListItem button>
-                      <ListItemText inset primary={element.name} />
-                    </ListItem>
-                  </Link>
-
-                  <Divider />
-                </List>
-              );
-            })}
-          </Collapse>
-        </Collapse>
-        <List>
-          <ListItem button onClick={this.toggleAcordion}>
-            <ListItemText primary={"スキル"} />
-            {this.state.isOpenAcordion ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Divider />
-        </List>
-      </div>
-    );
 
     return (
       <div>
         <AppBar position="sticky" color="white">
-          <Toolbar
-            style={{
-              position: "absolute"
-            }}
-          >
-            <IconButton>
-              <MenuIcon onClick={this.toggleDrawer} />
-            </IconButton>
-            {/* <IconButton>aaa</IconButton> */}
-          </Toolbar>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center"
-            }}
-          >
-            <Button
-              style={{
-                margin: "10px"
-              }}
-            >
-              TOP
-            </Button>
-            <Button
-              style={{
-                margin: "10px"
-              }}
-            >
-              メリット
-            </Button>
-            <Button
-              style={{
-                margin: "10px"
-              }}
-            >
-              案件
-            </Button>
-            <Button
-              style={{
-                margin: "10px"
-              }}
-            >
-              企業
-            </Button>
-            <Button
-              style={{
-                margin: "10px"
-              }}
-            >
-              お問い合わせ
-            </Button>
+          <div className={cssHeader}>
+            <div className={cssLogo}>ロゴ</div>
+
+            <TextField
+              defaultValue="Bare"
+              margin="normal"
+              variant="outlined"
+              className={cssInput}
+            />
+            <div className={cssSearchButton}>
+              <Button variant="contained" color="secondary">
+                検索
+                <SearchIcon />
+              </Button>
+            </div>
+            <div className={cssButton}>
+              <Button>詳細検索</Button>
+            </div>
           </div>
         </AppBar>
-        <SwipeableDrawer
-          open={this.state.isOpenDrawer}
-          onClose={this.toggleDrawer}
-        >
-          <div>{sideList}</div>
+        <SwipeableDrawer anchor="top" open={true}>
+          <Paper
+            style={{
+              margin: "30px 30px 20px 30px"
+            }}
+          >
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell colSpan={5}>あああ</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {/* {rows.map(row => {
+                return (
+                  <TableRow className={classes.row} key={row.id}>
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableCell numeric>{row.calories}</TableCell>
+                    <TableCell numeric>{row.fat}</TableCell>
+                    <TableCell numeric>{row.carbs}</TableCell>
+                    <TableCell numeric>{row.protein}</TableCell>
+                  </TableRow>
+                );
+              })} */}
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    スキル
+                  </TableCell>
+                  <TableCell numeric>aaaaa</TableCell>
+                  <TableCell numeric>aaaa</TableCell>
+                  <TableCell numeric>aaa</TableCell>
+                  <TableCell numeric>aaa</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    地域
+                  </TableCell>
+                  <TableCell numeric>aaaaa</TableCell>
+                  <TableCell numeric>aaaa</TableCell>
+                  <TableCell numeric>aaa</TableCell>
+                  <TableCell numeric>aaa</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    単価
+                  </TableCell>
+                  <TableCell numeric>aaaaa</TableCell>
+                  <TableCell numeric>aaaa</TableCell>
+                  <TableCell numeric>aaa</TableCell>
+                  <TableCell numeric>aaa</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    職種
+                  </TableCell>
+                  <TableCell numeric>aaaaa</TableCell>
+                  <TableCell numeric>aaaa</TableCell>
+                  <TableCell numeric>aaa</TableCell>
+                  <TableCell numeric>aaa</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </Paper>
+          <div className={cssHeader}>
+            <div className={cssButton}>
+              <Button>閉じる</Button>
+            </div>
+            <div className={cssSearchButton}>
+              <Button variant="contained" color="secondary">
+                検索
+                <SearchIcon />
+              </Button>
+            </div>
+          </div>
         </SwipeableDrawer>
       </div>
     );
