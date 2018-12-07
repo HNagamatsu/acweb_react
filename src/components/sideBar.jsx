@@ -53,7 +53,7 @@ class Header extends Component {
 
   render() {
     console.log(this.props);
-    const sideList = (
+    return (
       <div
         style={{
           width: 300
@@ -101,71 +101,6 @@ class Header extends Component {
           </ListItem>
           <Divider />
         </List>
-      </div>
-    );
-
-    return (
-      <div>
-        <AppBar position="sticky" color="white">
-          <Toolbar
-            style={{
-              position: "absolute"
-            }}
-          >
-            <IconButton>
-              <MenuIcon onClick={this.toggleDrawer} />
-            </IconButton>
-            {/* <IconButton>aaa</IconButton> */}
-          </Toolbar>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center"
-            }}
-          >
-            <Button
-              style={{
-                margin: "10px"
-              }}
-            >
-              TOP
-            </Button>
-            <Button
-              style={{
-                margin: "10px"
-              }}
-            >
-              メリット
-            </Button>
-            <Button
-              style={{
-                margin: "10px"
-              }}
-            >
-              案件
-            </Button>
-            <Button
-              style={{
-                margin: "10px"
-              }}
-            >
-              企業
-            </Button>
-            <Button
-              style={{
-                margin: "10px"
-              }}
-            >
-              お問い合わせ
-            </Button>
-          </div>
-        </AppBar>
-        <SwipeableDrawer
-          open={this.state.isOpenDrawer}
-          onClose={this.toggleDrawer}
-        >
-          <div>{sideList}</div>
-        </SwipeableDrawer>
       </div>
     );
   }

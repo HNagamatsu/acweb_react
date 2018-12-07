@@ -44,13 +44,25 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader?modules"]
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              modules: true
+            }
+          },
+          "postcss-loader"
+        ]
       }
     ]
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: "./template.html"
+    }),
     new webpack.DefinePlugin({
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       "process.env": {

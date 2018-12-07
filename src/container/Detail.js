@@ -1,10 +1,11 @@
 import { connect } from "react-redux";
 import Detail from "components/Detail";
-import { wp_getDetail } from "actions/wp";
+import { wp_getDetail, wp_getCategories } from "actions/wp";
 
 export default connect(
   state => ({
-    wpDetail: state.wpDetail
+    wpDetail: state.wpDetail,
+    wpCategories: state.wpCategories
   }),
-  { wp_getDetail }
+  { wp_getDetail, wp_getCategories }
 )(Detail);

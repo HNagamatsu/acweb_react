@@ -13,7 +13,23 @@ export const WP_SEARCH = "posts/?args=";
 export const WP_SEARCH_SUCCESS = "WP_SEARCH_SUCCESS";
 export const WP_SEARCH_FAILE = "WP_SEARCH_FAILE";
 
-export const wp_get = createAction(WP_GET_LIST);
+export const WP_GET_CATEGORIES = "tokyo";
+export const WP_GET_CATEGORIES_SUCCESS = "WP_GET_CATEGORIES_SUCCESS";
+export const WP_GET_CATEGORIES_FAILE = "WP_GET_CATEGORIES_FAILE";
+
+export const WP_GET_CATEGORY_POSTS = "posts?_embed&tokyo=";
+export const WP_GET_CATEGORY_POSTS_SUCCESS = "WP_GET_CATEGORY_POSTS_SUCCESS";
+export const WP_GET_CATEGORY_POSTS_FAILE = "WP_GET_CATEGORY_POSTS_FAILE";
+
+export const WP_GET_SKILLS = "skill";
+export const WP_GET_SKILLS_SUCCESS = "WP_GET_SKILLS_SUCCESS";
+export const WP_GET_SKILLS_FAILE = "WP_GET_SKILLS_FAILE";
+
+export const WP_GET_SKILL_POSTS = "posts?_embed&skill=";
+export const WP_GET_SKILL_POSTS_SUCCESS = "WP_GET_SKILL_POSTS_SUCCESS";
+export const WP_GET_SKILL_POSTS_FAILE = "WP_GET_SKILL_POSTS_FAILE";
+
+export const wp_getList = createAction(WP_GET_LIST);
 export const wp_getSuccess = createAction(WP_GET_LIST_SUCCESS, ({ data }) => ({
   data
 }));
@@ -34,3 +50,45 @@ export const wp_search = createAction(WP_SEARCH, query => ({
 export const wp_searchSuccess = createAction(WP_SEARCH_SUCCESS, ({ data }) => ({
   data
 }));
+
+export const wp_getCategories = createAction(WP_GET_CATEGORIES, slug => ({
+  slug
+}));
+export const wp_getCategoriesSuccess = createAction(
+  WP_GET_CATEGORIES_SUCCESS,
+  ({ data }) => ({
+    data
+  })
+);
+
+export const wp_getCategoryPosts = createAction(
+  WP_GET_CATEGORY_POSTS,
+  ({ id }) => ({
+    id
+  })
+);
+export const wp_getCategoryPostsSuccess = createAction(
+  WP_GET_CATEGORY_POSTS_SUCCESS,
+  ({ data }) => ({
+    data
+  })
+);
+
+export const wp_getSkills = createAction(WP_GET_SKILLS);
+
+export const wp_getSkillsSuccess = createAction(
+  WP_GET_SKILLS_SUCCESS,
+  ({ data }) => ({
+    data
+  })
+);
+
+export const wp_getSkillPosts = createAction(WP_GET_SKILL_POSTS, ({ id }) => ({
+  id
+}));
+export const wp_getSkillPostsSuccess = createAction(
+  WP_GET_SKILL_POSTS_SUCCESS,
+  ({ data }) => ({
+    data
+  })
+);

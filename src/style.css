@@ -5,3 +5,8 @@
 body {
   background: #fafafa;
 }
+
+a:visited,
+a {
+  color: initial;
+}

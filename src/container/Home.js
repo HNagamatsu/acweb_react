@@ -1,10 +1,16 @@
 import { connect } from "react-redux";
 import Home from "components/Home";
-import { wp_get } from "actions/wp";
+import { wp_getList, wp_getCategories, wp_getSkills } from "actions/wp";
 
 export default connect(
   state => ({
-    wp: state.wp
+    wpList: state.wpList,
+    wpCategories: state.wpCategories,
+    wpSkills: state.wpSkills
   }),
-  { wp_get }
+  {
+    wp_getList,
+    wp_getCategories,
+    wp_getSkills
+  }
 )(Home);

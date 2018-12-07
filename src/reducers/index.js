@@ -1,15 +1,21 @@
 import { combineReducers } from "redux";
 
 import increments from "reducers/increments";
-import wp from "reducers/wp";
+import wpList from "reducers/wpList";
 import wpDetail from "reducers/wpDetail";
 import wpSearch from "reducers/wpSearch";
+import wpCategories from "reducers/wpCategories";
+import wpCategoryPosts from "reducers/wpCategoryPosts";
+import wpSkills from "reducers/wpSkills";
 
 const reducers = combineReducers({
   increments,
-  wp,
+  wpList,
   wpDetail,
-  wpSearch
+  wpSearch,
+  wpCategories,
+  wpCategoryPosts,
+  wpSkills
 });
 
 export default reducers;
