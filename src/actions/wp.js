@@ -17,7 +17,7 @@ export const WP_GET_CATEGORIES = "tokyo";
 export const WP_GET_CATEGORIES_SUCCESS = "WP_GET_CATEGORIES_SUCCESS";
 export const WP_GET_CATEGORIES_FAILE = "WP_GET_CATEGORIES_FAILE";
 
-export const WP_GET_CATEGORY_POSTS = "posts?_embed&tokyo=";
+export const WP_GET_CATEGORY_POSTS = "posts?_embed&";
 export const WP_GET_CATEGORY_POSTS_SUCCESS = "WP_GET_CATEGORY_POSTS_SUCCESS";
 export const WP_GET_CATEGORY_POSTS_FAILE = "WP_GET_CATEGORY_POSTS_FAILE";
 
@@ -25,9 +25,9 @@ export const WP_GET_SKILLS = "skill";
 export const WP_GET_SKILLS_SUCCESS = "WP_GET_SKILLS_SUCCESS";
 export const WP_GET_SKILLS_FAILE = "WP_GET_SKILLS_FAILE";
 
-export const WP_GET_SKILL_POSTS = "posts?_embed&skill=";
-export const WP_GET_SKILL_POSTS_SUCCESS = "WP_GET_SKILL_POSTS_SUCCESS";
-export const WP_GET_SKILL_POSTS_FAILE = "WP_GET_SKILL_POSTS_FAILE";
+export const WP_GET_JOBS = "job";
+export const WP_GET_JOBS_SUCCESS = "WP_GET_JOBS_SUCCESS";
+export const WP_GET_JOBS_FAILE = "WP_GET_JOBS_FAILE";
 
 export const wp_getList = createAction(WP_GET_LIST);
 export const wp_getSuccess = createAction(WP_GET_LIST_SUCCESS, ({ data }) => ({
@@ -63,7 +63,8 @@ export const wp_getCategoriesSuccess = createAction(
 
 export const wp_getCategoryPosts = createAction(
   WP_GET_CATEGORY_POSTS,
-  ({ id }) => ({
+  ({ slug, id }) => ({
+    slug,
     id
   })
 );
@@ -83,11 +84,10 @@ export const wp_getSkillsSuccess = createAction(
   })
 );
 
-export const wp_getSkillPosts = createAction(WP_GET_SKILL_POSTS, ({ id }) => ({
-  id
-}));
-export const wp_getSkillPostsSuccess = createAction(
-  WP_GET_SKILL_POSTS_SUCCESS,
+export const wp_getJobs = createAction(WP_GET_JOBS);
+
+export const wp_getJobsSuccess = createAction(
+  WP_GET_JOBS_SUCCESS,
   ({ data }) => ({
     data
   })

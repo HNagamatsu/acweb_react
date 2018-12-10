@@ -10,11 +10,11 @@ import configureStore from "./store/configureStore";
 const store = configureStore();
 
 // components
-import Hello from "container/Hello";
 import Home from "container/Home";
 import Detail from "container/Detail";
 import Search from "container/Search";
 import Category from "container/Category";
+import Hello from "container/Hello";
 
 require("./reset.css");
 
@@ -25,8 +25,7 @@ render(
         <Route exact path="/" component={Home} />
         <Route exact path="/detail/:id" component={Detail} />
         <Route exact path="/search" component={Search} />
-        <Route exact path="/category/:id" component={Category} />
-        <Route exact path="/Hello" component={Hello} />
+        <Route exact path="/category/:slug/:id" component={Category} />
 
         {/* <Route exact path="/hello2" component={Hello2} /> */}
       </Switch>

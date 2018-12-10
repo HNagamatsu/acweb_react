@@ -29,3 +29,10 @@
     }
   }
 }
+
+.backContainer {
+  background: "#efefef";
+  position: absolute;
+  top: 100px;
+  bottom: 0;
+}

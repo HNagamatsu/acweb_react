@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: baseline;
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 7px;
 }
 
 .cssInput {
@@ -28,4 +28,45 @@
   width: 50px;
   height: 17px;
   display: block;
+}
+
+.cssSearchGroupe {
+  display: flex;
+}
+
+.cssSearchTitle {
+  min-width: 10%;
+  padding: 15px;
+}
+
+.cssSearchData {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.cssLabel {
+  width: 33%;
+}
+
+.cssSearchInput {
+  display: flex;
+  align-items: baseline;
+}
+
+.cssSearchInputLabel {
+  margin-left: 10px;
+}
+
+.cssDrawer {
+  padding: 20px 20px 0 20px;
+}
+
+.cssSearchButtons {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

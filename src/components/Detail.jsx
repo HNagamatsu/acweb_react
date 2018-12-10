@@ -52,7 +52,7 @@ class Detail extends React.Component {
     console.log(this.props);
     return (
       <div className="container">
-        <Header />
+        <Header {...this.props} />
         {this.props.wpDetail.data && (
           <Grid
             container

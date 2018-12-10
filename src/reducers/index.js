@@ -7,6 +7,7 @@ import wpSearch from "reducers/wpSearch";
 import wpCategories from "reducers/wpCategories";
 import wpCategoryPosts from "reducers/wpCategoryPosts";
 import wpSkills from "reducers/wpSkills";
+import wpJobs from "reducers/wpJobs";
 
 const reducers = combineReducers({
   increments,
@@ -15,7 +16,8 @@ const reducers = combineReducers({
   wpSearch,
   wpCategories,
   wpCategoryPosts,
-  wpSkills
+  wpSkills,
+  wpJobs
 });
 
 export default reducers;

@@ -10,7 +10,7 @@ import {
   WP_GET_CATEGORIES,
   WP_GET_CATEGORY_POSTS,
   WP_GET_SKILLS,
-  WP_GET_SKILL_POSTS
+  WP_GET_JOBS
 } from "actions/wp";
 import {
   wp_getSuccess,
@@ -18,7 +18,8 @@ import {
   wp_searchSuccess,
   wp_getCategoriesSuccess,
   wp_getCategoryPostsSuccess,
-  wp_getSkillsSuccess
+  wp_getSkillsSuccess,
+  wp_getJobsSuccess
 } from "actions/wp";
 
 const timeout = 30000;
@@ -126,7 +127,8 @@ export function* handleGetCategoryPosts() {
 
       const result = yield call(
         xhrRequest.get,
-        action.type + action.payload.id
+
+        action.type + action.payload.slug + "=" + action.payload.id
       );
       console.log(result);
       if (result.status === 200) {
@@ -155,19 +157,16 @@ export function* handleGetSkills() {
   }
 }
 
-export function* handleGetSkillPosts() {
+export function* handleGetJobs() {
   while (true) {
     try {
-      const action = yield take(WP_GET_SKILL_POSTS);
+      const action = yield take(WP_GET_JOBS);
       console.log(action);
 
-      const result = yield call(
-        xhrRequest.get,
-        action.type + action.payload.id
-      );
+      const result = yield call(xhrRequest.get, action.type);
       console.log(result);
       if (result.status === 200) {
-        yield put(wp_getSkillPostsSuccess(result));
+        yield put(wp_getJobsSuccess(result));
       }
     } catch (e) {
       console.log(e);
@@ -182,5 +181,5 @@ export default function* rootSaga() {
   yield fork(handleGetCategories);
   yield fork(handleGetCategoryPosts);
   yield fork(handleGetSkills);
-  yield fork(handleGetSkillPosts);
+  yield fork(handleGetJobs);
 }

@@ -49,20 +49,12 @@ class Home extends React.Component {
     this.props.wp_getList();
     this.props.wp_getCategories();
     this.props.wp_getSkills();
+    this.props.wp_getJobs();
   }
   state = {
     isOpenArea: false,
     isOpenTokyo: false,
     isOpenSkill: false
-  };
-  toggleAreaAcordion = () => {
-    this.setState(state => ({ isOpenArea: !state.isOpenArea }));
-  };
-  toggleTokyoAcordion = () => {
-    this.setState(state => ({ isOpenTokyo: !state.isOpenTokyo }));
-  };
-  toggleSkillAcordion = () => {
-    this.setState(state => ({ isOpenSkill: !state.isOpenSkill }));
   };
 
   render() {
@@ -75,53 +67,7 @@ class Home extends React.Component {
             container
             justify="center"
             spacing={40}
-            style={{ marginTop: 40 }}
-          >
-            <div
-              style={{
-                maxWidth: "800px"
-              }}
-            >
-              <TextField />
-              <Typography
-                gutterBottom
-                variant="h5"
-                component="h2"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  width: "800px"
-                }}
-                onClick={this.toggleAreaAcordion}
-              >
-                エリア
-                {this.state.isOpenArea ? <ExpandLess /> : <ExpandMore />}
-              </Typography>
-
-              <Divider />
-              <Collapse in={this.state.isOpenArea} timeout="auto" unmountOnExit>
-                {this.props.wpCategories.data.length
-                  ? this.props.wpCategories.data.map(item => {
-                      return (
-                        <Button
-                          variant="contained"
-                          style={{
-                            margin: "10px"
-                          }}
-                        >
-                          <Link to={"/category/" + item.id}>{item.name}</Link>
-                        </Button>
-                      );
-                    })
-                  : null}
-              </Collapse>
-            </div>
-          </Grid>
-          <Grid
-            container
-            justify="center"
-            spacing={40}
-            style={{ marginTop: 40 }}
+            style={{ paddingTop: 40, background: "#efefef" }}
           >
             <Grid>
               {this.props.wpList.data.length
@@ -138,67 +84,56 @@ class Home extends React.Component {
                       </Link>
                       <Divider />
                       <CardContent>
-                        {this.props.wpCategories.data.map(element => {
-                          if (element.id === item.tokyo[0]) {
-                            return element.name;
-                          }
+                        {this.props.wpSkills.data.map(element => {
+                          return item.skill.map(skill => {
+                            if (element.id === skill) {
+                              return (
+                                <Chip
+                                  to={`/category/skill/${element.id}`}
+                                  component={Link}
+                                  label={element.name}
+                                  variant="outlined"
+                                />
+                              );
+                            }
+                          });
                         })}
-                        <Chip
-                          label="javascript"
-                          variant="outlined"
-                          onClick={() => {}}
-                        />
-                        <Chip
-                          label="PHP"
-                          variant="outlined"
-                          onClick={() => {}}
-                        />
-                        <Chip
-                          label="Swift"
-                          variant="outlined"
-                          onClick={() => {}}
-                        />
-                        <Chip
-                          label="python"
-                          variant="outlined"
-                          onClick={() => {}}
-                        />
-                        <Chip
-                          label="C#"
-                          variant="outlined"
-                          onClick={() => {}}
-                        />
-                        <Chip
-                          label="java"
-                          variant="outlined"
-                          onClick={() => {}}
-                        />
-                        <Chip
-                          label="react"
-                          variant="outlined"
-                          onClick={() => {}}
-                        />
-                        <Chip
-                          label="vue"
-                          variant="outlined"
-                          onClick={() => {}}
-                        />
-                        <Chip
-                          label="angular"
-                          variant="outlined"
-                          onClick={() => {}}
-                        />
+
                         <div className={cardStatus}>
-                          <div className={cardStatus}>単価:52万円～55万円</div>
+                          {item.post_meta.price ? (
+                            <div className={cardStatus}>
+                              単価:
+                              {item.post_meta.price}
+                              万円～
+                            </div>
+                          ) : (
+                            ""
+                          )}
+
                           <div className={cardStatus}>
                             <PersonIcon />
-                            Webデザイナー
+                            {this.props.wpJobs.data.map(element => {
+                              return item.job.map(job => {
+                                if (element.id === job) {
+                                  return (
+                                    <Link to={`/category/job/${element.id}`}>
+                                      {element.name}
+                                    </Link>
+                                  );
+                                }
+                              });
+                            })}
                           </div>
                           <div className={cardStatus}>
                             <RoomIcon />
+
                             {this.props.wpCategories.data.map(element => {
                               if (element.id === item.tokyo[0]) {
-                                return element.name;
+                                return (
+                                  <Link to={`/category/tokyo/${element.id}`}>
+                                    {element.name}
+                                  </Link>
+                                );
                               }
                             })}
                           </div>
