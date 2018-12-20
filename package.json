@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=development run-p serve webpack",
     "serve": "json-server --watch api.json --routes routes.json",
-    "webpack": "webpack-dev-server --hot --mode development --open"
+    "webpack": "webpack-dev-server --hot --mode development --open",
+    "web": "NODE_ENV=production webpack"
   },
   "repository": {
     "type": "git",

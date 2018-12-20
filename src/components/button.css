@@ -1,0 +1,16 @@
+@custom-media --mobile (max-width: 640px);
+
+.cssButton {
+  & span {
+    margin-left: 5px;
+  }
+}
+
+@media (--mobile) {
+  .cssButton {
+    & span {
+      font-size: 0.8em;
+      text-align: center;
+    }
+  }
+}

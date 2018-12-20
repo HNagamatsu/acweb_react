@@ -1,5 +1,13 @@
 import axios from "axios";
-import { fork, take, put, call, select, cancel } from "redux-saga/effects";
+import {
+  fork,
+  take,
+  put,
+  call,
+  select,
+  cancel,
+  takeEvery
+} from "redux-saga/effects";
 import { delay } from "redux-saga";
 
 //actionTypes
@@ -27,7 +35,7 @@ const timeout = 30000;
 // const baseURL = "http://localhost:3005/";
 const baseURL =
   NODE_ENV === "production"
-    ? "http://acweb.co.jp"
+    ? "http://nagamatsu.acweb.co.jp/wp-json/wp/v2/"
     : "http://localhost:8888/wordpress/wp-json/wp/v2/";
 
 const xhrRequest = axios.create({
@@ -39,147 +47,86 @@ const xhrRequest = axios.create({
 });
 
 // リスト一覧取得
-export function* handleGetList() {
-  while (true) {
-    try {
-      const action = yield take(WP_GET_LIST);
-      console.log(action.type);
-
-      const result = yield call(xhrRequest.get, action.type);
-      console.log(result);
-      if (result.status === 200) {
-        yield put(wp_getSuccess(result));
-      }
-    } catch (e) {
-      console.log(e);
-    }
+function* handleGetList(action) {
+  try {
+    const result = yield call(xhrRequest.get, action.payload.url);
+    yield put(wp_getSuccess(result));
+  } catch (e) {
+    console.log(e);
   }
 }
 
-export function* handleGetListDetail() {
-  while (true) {
-    try {
-      const action = yield take(WP_GET_LIST_DETAIL);
-      console.log(action);
-
-      const result = yield call(
-        xhrRequest.get,
-        action.type + action.payload.id
-      );
-      console.log(result);
-      if (result.status === 200) {
-        yield put(wp_getDetailSuccess(result));
-      }
-    } catch (e) {
-      console.log(e);
-    }
+function* handleGetListDetail(action) {
+  try {
+    const result = yield call(xhrRequest.get, action.type + action.payload.id);
+    yield put(wp_getDetailSuccess(result));
+  } catch (e) {
+    console.log(e);
   }
 }
 
-export function* handleSearch() {
-  while (true) {
-    try {
-      const action = yield take(WP_SEARCH);
-      console.log(action);
+function* handleSearch(action) {
+  try {
+    const result = yield call(
+      xhrRequest.get,
+      action.type + action.payload.query
+    );
+    yield put(wp_searchSuccess(result));
+  } catch (e) {}
+}
 
-      const result = yield call(
-        xhrRequest.get,
-        action.type + action.payload.query
-      );
-      console.log(result);
-      if (result.status === 200) {
-        yield put(wp_searchSuccess(result));
+function* handleGetCategories(action) {
+  try {
+    const result = yield call(xhrRequest.get, action.type, {
+      params: {
+        slug: action.payload.slug,
+        per_page: 30,
+        parent: 34
       }
-    } catch (e) {
-      console.log(e);
-    }
+    });
+    yield put(wp_getCategoriesSuccess(result));
+  } catch (e) {
+    console.log(e);
   }
 }
 
-export function* handleGetCategories() {
-  while (true) {
-    try {
-      const action = yield take(WP_GET_CATEGORIES);
-      console.log(action);
+function* handleGetCategoryPosts(action) {
+  try {
+    const result = yield call(
+      xhrRequest.get,
 
-      const result = yield call(xhrRequest.get, action.type, {
-        params: {
-          slug: action.payload.slug,
-          per_page: 30,
-          parent: 34
-        }
-      });
-      console.log(result);
-      if (result.status === 200) {
-        yield put(wp_getCategoriesSuccess(result));
-      }
-    } catch (e) {
-      console.log(e);
-    }
+      action.type + action.payload.slug + "=" + action.payload.id
+    );
+    yield put(wp_getCategoryPostsSuccess(result));
+  } catch (e) {
+    console.log(e);
   }
 }
 
-export function* handleGetCategoryPosts() {
-  while (true) {
-    try {
-      const action = yield take(WP_GET_CATEGORY_POSTS);
-      console.log(action);
-
-      const result = yield call(
-        xhrRequest.get,
-
-        action.type + action.payload.slug + "=" + action.payload.id
-      );
-      console.log(result);
-      if (result.status === 200) {
-        yield put(wp_getCategoryPostsSuccess(result));
-      }
-    } catch (e) {
-      console.log(e);
-    }
+function* handleGetSkills(action) {
+  try {
+    const result = yield call(xhrRequest.get, action.type);
+    yield put(wp_getSkillsSuccess(result));
+  } catch (e) {
+    console.log(e);
   }
 }
 
-export function* handleGetSkills() {
-  while (true) {
-    try {
-      const action = yield take(WP_GET_SKILLS);
-      console.log(action);
-
-      const result = yield call(xhrRequest.get, action.type);
-      console.log(result);
-      if (result.status === 200) {
-        yield put(wp_getSkillsSuccess(result));
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-}
-
-export function* handleGetJobs() {
-  while (true) {
-    try {
-      const action = yield take(WP_GET_JOBS);
-      console.log(action);
-
-      const result = yield call(xhrRequest.get, action.type);
-      console.log(result);
-      if (result.status === 200) {
-        yield put(wp_getJobsSuccess(result));
-      }
-    } catch (e) {
-      console.log(e);
-    }
+function* handleGetJobs(action) {
+  try {
+    const result = yield call(xhrRequest.get, action.type);
+    yield put(wp_getJobsSuccess(result));
+  } catch (e) {
+    console.log(e);
   }
 }
 
 export default function* rootSaga() {
-  yield fork(handleGetList);
-  yield fork(handleGetListDetail);
-  yield fork(handleSearch);
-  yield fork(handleGetCategories);
-  yield fork(handleGetCategoryPosts);
-  yield fork(handleGetSkills);
-  yield fork(handleGetJobs);
+  yield takeEvery(WP_GET_LIST, handleGetList);
+  yield takeEvery(WP_GET_LIST_DETAIL, handleGetListDetail);
+  yield takeEvery(WP_SEARCH, handleSearch);
+  yield takeEvery(WP_GET_CATEGORIES, handleGetCategories);
+  yield takeEvery(WP_GET_CATEGORY_POSTS, handleGetCategoryPosts);
+  yield takeEvery(WP_GET_SKILLS, handleGetSkills);
+  yield takeEvery(WP_GET_JOBS, handleGetJobs);
 }

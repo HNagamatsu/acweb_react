@@ -4,7 +4,8 @@ import {
   wp_getDetail,
   wp_getCategories,
   wp_getSkills,
-  wp_getJobs
+  wp_getJobs,
+  wp_search
 } from "actions/wp";
 
 export default connect(

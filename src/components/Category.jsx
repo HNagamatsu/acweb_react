@@ -32,9 +32,21 @@ const media = "wp:featuredmedia";
 
 //components
 import Header from "components/Header";
+import Footer from "components/Footer";
+import Loading from "components/Loading";
 
 //css
-import { items, cardStyle, cardTitile, cardStatus } from "./home.css";
+import {
+  items,
+  cardStyle,
+  cardTitile,
+  cardStatus,
+  cardContainer,
+  chips,
+  breadcrumb,
+  gridContainer
+} from "./home.css";
+import { secondary } from "./color.css";
 
 class Category extends React.Component {
   getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -55,50 +67,35 @@ class Category extends React.Component {
     switch (slug) {
       case "job":
         return (
-          <div>
+          <span>
             {this.props.wpJobs.data.map(element => {
               if (element.id == id) {
-                return (
-                  <div>
-                    職種/
-                    {element.name}
-                  </div>
-                );
+                return `職種 / ${element.name}`;
               }
             })}
-          </div>
+          </span>
         );
         break;
       case "skill":
         return (
-          <div>
+          <span>
             {this.props.wpSkills.data.map(element => {
               if (element.id == id) {
-                return (
-                  <div>
-                    スキル/
-                    {element.name}
-                  </div>
-                );
+                return `スキル / ${element.name}`;
               }
             })}
-          </div>
+          </span>
         );
         break;
       case "tokyo":
         return (
-          <div>
+          <span>
             {this.props.wpCategories.data.map(element => {
               if (element.id == id) {
-                return (
-                  <div>
-                    東京/
-                    {element.name}
-                  </div>
-                );
+                return `東京 / ${element.name}`;
               }
             })}
-          </div>
+          </span>
         );
       default:
         break;
@@ -109,111 +106,104 @@ class Category extends React.Component {
     return (
       <div className="container">
         <Header {...this.props} />
-        <Grid
-          container
-          justify="center"
-          style={{
-            paddingTop: 40
-          }}
-        >
-          <Grid>
-            <Typography
-              gutterBottom
-              variant="h5"
-              component="h2"
-              style={{
-                display: "flex",
-                alignItems: "center"
-              }}
-            >
-              {this.BreadcrumbList(this.props.match.params)}
-            </Typography>
-            {this.props.wpCategoryPosts.data.length
-              ? this.props.wpCategoryPosts.data.map(item => (
-                  <Card style={{ maxWidth: 800 }} className={cardStyle}>
-                    <Link to={"/detail/" + item.id}>
-                      <CardActionArea>
-                        <CardHeader
-                          title={item.title.rendered}
-                          component="h3"
-                          classes={cardTitile}
-                        />
-                      </CardActionArea>
-                    </Link>
-                    <Divider />
-                    <CardContent>
-                      {this.props.wpSkills.data.map(element => {
-                        return item.skill.map(skill => {
-                          if (element.id === skill) {
+        <div className={cardContainer}>
+          <div className={breadcrumb}>
+            <Link to="/">
+              <span className={secondary}>Home </span>
+            </Link>
+            / {this.BreadcrumbList(this.props.match.params)}
+          </div>
+          {this.props.wpList.loading && <Loading />}
+
+          <Grid
+            container
+            justify="center"
+            style={{
+              paddingTop: 40
+            }}
+          >
+            <Grid className={gridContainer}>
+              {this.props.wpList.data.length
+                ? this.props.wpList.data.map(item => (
+                    <Card style={{ maxWidth: 800 }} className={cardStyle}>
+                      <Link to={"/detail/" + item.id}>
+                        <CardActionArea>
+                          <CardHeader
+                            title={item.title.rendered}
+                            component="h3"
+                            className={cardTitile}
+                          />
+                        </CardActionArea>
+                      </Link>
+                      <Divider />
+                      <CardContent>
+                        {this.props.wpSkills.data.map(element => {
+                          return item.skill.map(skill => {
+                            if (element.id === skill) {
+                              return (
+                                <Chip
+                                  to={`/category/skill/${element.id}`}
+                                  component={Link}
+                                  label={element.name}
+                                  variant="outlined"
+                                  color="secondary"
+                                  className={chips}
+                                />
+                              );
+                            }
+                          });
+                        })}
+                        {this.props.wpJobs.data.map(element => {
+                          return item.job.map(job => {
+                            if (element.id === job) {
+                              return (
+                                <Chip
+                                  icon={<PersonIcon />}
+                                  to={`/category/job/${element.id}`}
+                                  component={Link}
+                                  label={element.name}
+                                  variant="outlined"
+                                  color="secondary"
+                                  className={chips}
+                                />
+                              );
+                            }
+                          });
+                        })}
+                        {this.props.wpCategories.data.map(element => {
+                          if (element.id === item.tokyo[0]) {
                             return (
                               <Chip
-                                to={`/category/skill/${element.id}`}
+                                icon={<RoomIcon />}
+                                to={`/category/tokyo/${element.id}`}
                                 component={Link}
                                 label={element.name}
                                 variant="outlined"
+                                color="secondary"
+                                className={chips}
                               />
                             );
                           }
-                        });
-                      })}
-
-                      <div className={cardStatus}>
-                        {item.post_meta.price ? (
-                          <div className={cardStatus}>
-                            単価:
-                            {item.post_meta.price}
-                            万円～
-                          </div>
-                        ) : (
-                          ""
-                        )}
-
-                        <div className={cardStatus}>
-                          <PersonIcon />
-                          {this.props.wpJobs.data.map(element => {
-                            return item.job.map(job => {
-                              if (element.id === job) {
-                                return (
-                                  <Link to={`/category/job/${element.id}`}>
-                                    {element.name}
-                                  </Link>
-                                );
-                              }
-                            });
-                          })}
-                        </div>
-                        <div className={cardStatus}>
-                          <RoomIcon />
-
-                          {this.props.wpCategories.data.map(element => {
-                            if (element.id === item.tokyo[0]) {
-                              return (
-                                <Link to={`/category/tokyo/${element.id}`}>
-                                  {element.name}
-                                </Link>
-                              );
-                            }
-                          })}
-                        </div>
-                      </div>
-
-                      <Typography component="p">
-                        {/* 記事抜粋 */}
-                        <Typography>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: item.excerpt.rendered
-                            }}
-                            className={items}
-                          />
+                        })}
+                        <Typography component="p">
+                          {/* 記事抜粋 */}
+                          <Typography>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: item.excerpt.rendered
+                              }}
+                              className={items}
+                            />
+                          </Typography>
                         </Typography>
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                ))
-              : null}
+                      </CardContent>
+                    </Card>
+                  ))
+                : null}
+            </Grid>
           </Grid>
-        </Grid>
+        </div>
+        <Footer {...this.props} />
       </div>
     );
   }

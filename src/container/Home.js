@@ -4,7 +4,8 @@ import {
   wp_getList,
   wp_getCategories,
   wp_getSkills,
-  wp_getJobs
+  wp_getJobs,
+  wp_search
 } from "actions/wp";
 
 export default connect(
@@ -18,6 +19,7 @@ export default connect(
     wp_getList,
     wp_getCategories,
     wp_getSkills,
-    wp_getJobs
+    wp_getJobs,
+    wp_search
   }
 )(Home);

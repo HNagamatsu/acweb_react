@@ -1,0 +1,52 @@
+@custom-media --mobile (max-width: 640px);
+
+.cssFooter {
+  background: #426065;
+  display: flex;
+  justify-content: space-around;
+  padding: 30px 10px;
+  margin-top: 50px;
+  & dt {
+    color: white;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+  }
+  & dd {
+    margin-bottom: 10px;
+    font-size: 0.9em;
+    color: #cdcdcd;
+    & a {
+      color: #cdcdcd;
+      transition-duration: 0.3s;
+      &:hover {
+        color: gray;
+      }
+    }
+  }
+}
+
+.cssCopyRights {
+  padding: 20px;
+  text-align: center;
+  color: white;
+  background: #2e3b3e;
+}
+
+@media (--mobile) {
+  .cssFooter {
+    width: 100%;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    margin-top: 10px;
+    & dl {
+      width: 45%;
+      margin-bottom: 15px;
+      & dt {
+        font-size: 0.8em;
+      }
+      & dd {
+        font-size: 0.7em;
+      }
+    }
+  }
+}

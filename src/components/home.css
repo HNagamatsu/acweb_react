@@ -1,13 +1,39 @@
+@custom-media --mobile (max-width: 640px);
+
+.cardContainer {
+  padding-top: 40px;
+  background: #efefef;
+}
+.gridContainer {
+  width: calc(100% - 50px);
+}
+.breadcrumb {
+  margin: 0 30px;
+  max-width: calc(100% - 50px);
+}
+
 .items {
-  /* border: solid; */
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+.chips {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  & span {
+    color: #f50057;
+  }
 }
 
 .cardTitile {
-  font-size: 1.2em;
+  & span {
+    font-weight: bold;
+    color: #636363;
+  }
 }
 
 .cardStyle {
-  margin-bottom: 10px;
+  margin: 0 auto 10px;
 }
 
 .cardStatus {
@@ -35,4 +61,10 @@
   position: absolute;
   top: 100px;
   bottom: 0;
+}
+
+@media (--mobile) {
+  .cardContainer {
+    padding: 30px 10px;
+  }
 }

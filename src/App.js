@@ -24,7 +24,7 @@ render(
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/detail/:id" component={Detail} />
-        <Route exact path="/search" component={Search} />
+        <Route exact path="/search/:query" component={Search} />
         <Route exact path="/category/:slug/:id" component={Category} />
 
         {/* <Route exact path="/hello2" component={Hello2} /> */}

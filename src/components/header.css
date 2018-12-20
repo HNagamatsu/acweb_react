@@ -1,3 +1,5 @@
+@custom-media --mobile (max-width: 640px);
+
 .cssHeader {
   display: flex;
   justify-content: center;
@@ -8,7 +10,6 @@
 
 .cssInput {
   width: 300px;
-  height: 50px;
 }
 .cssSearchButton {
   height: 40px;
@@ -69,4 +70,45 @@
   position: relative;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+@media (--mobile) {
+  .cssHeader {
+    padding: 40px 12px 0;
+  }
+  .cssLogo {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 15px;
+    margin: 0 auto;
+    width: 50px;
+    height: 17px;
+    display: block;
+  }
+  .cssSearchGroupe {
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .cssSearchTitle {
+    padding: 15px 0 5px;
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  .cssLabel {
+    width: 48%;
+  }
+  .cssSearchInput {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    flex-wrap: wrap;
+  }
+  .cssInput {
+    width: 70%;
+    height: 50px;
+    margin-top: 0;
+  }
 }

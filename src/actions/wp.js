@@ -9,7 +9,7 @@ export const WP_GET_LIST_DETAIL = "posts/";
 export const WP_GET_LIST_DETAIL_SUCCESS = "WP_GET_LIST_DETAIL_SUCCESS";
 export const WP_GET_LIST_DETAIL_FAILE = "WP_GET_LIST_DETAIL_FAILE";
 
-export const WP_SEARCH = "posts/?args=";
+export const WP_SEARCH = "posts?search=";
 export const WP_SEARCH_SUCCESS = "WP_SEARCH_SUCCESS";
 export const WP_SEARCH_FAILE = "WP_SEARCH_FAILE";
 
@@ -29,7 +29,9 @@ export const WP_GET_JOBS = "job";
 export const WP_GET_JOBS_SUCCESS = "WP_GET_JOBS_SUCCESS";
 export const WP_GET_JOBS_FAILE = "WP_GET_JOBS_FAILE";
 
-export const wp_getList = createAction(WP_GET_LIST);
+export const wp_getList = createAction(WP_GET_LIST, () => ({
+  url: "posts?_embed&filter[posts_per_page]=5"
+}));
 export const wp_getSuccess = createAction(WP_GET_LIST_SUCCESS, ({ data }) => ({
   data
 }));

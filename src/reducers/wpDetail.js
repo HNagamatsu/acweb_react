@@ -11,28 +11,34 @@ const initialState = {
   error: null,
   data: {
     title: "",
-    content: ""
+    content: "",
+    job: [],
+    skill: [],
+    tokyo: [],
+    post_meta: {
+      price: ""
+    }
   }
 };
 
 const wpCategories = handleActions(
   {
-    WP_GET_LIST_DETAIL: (state, action) => {
+    [WP_GET_LIST_DETAIL]: (state, action) => {
       console.log(action);
       return {
         ...state,
         loading: true
       };
     },
-    WP_GET_LIST_DETAIL_SUCCESS: (state, action) => {
+    [WP_GET_LIST_DETAIL_SUCCESS]: (state, action) => {
       console.log(action.payload);
       return {
         ...state,
         data: action.payload.data,
-        loading: true
+        loading: false
       };
     },
-    WP_GET_LIST_DETAIL_FAILE: (state, action) => {
+    [WP_GET_LIST_DETAIL_FAILE]: (state, action) => {
       return {
         ...state,
         data: [],

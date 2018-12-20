@@ -33,12 +33,17 @@ import {
 
 class Header extends Component {
   state = {
-    isOpenDrawer: false
+    isOpenDrawer: false,
+    input: ""
   };
   toggleDrawer = () => {
     this.setState(state => ({ isOpenDrawer: !state.isOpenDrawer }));
   };
-
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    });
+  };
   render() {
     console.log(this.props);
 
@@ -51,15 +56,24 @@ class Header extends Component {
             </div>
 
             <TextField
-              defaultValue="Bare"
+              value={this.state.input}
               margin="normal"
               variant="outlined"
               className={cssInput}
+              onChange={this.handleChange("input")}
             />
             <div className={cssSearchButton}>
-              <Button variant="contained" color="secondary">
-                検索
-                <SearchIcon />
+              <Button
+                variant="contained"
+                color="secondary"
+                component={Link}
+                to={`/search/${this.state.input}`}
+              >
+                <SearchIcon
+                  style={{
+                    color: "white"
+                  }}
+                />
               </Button>
             </div>
             <div className={cssButton}>
@@ -116,10 +130,11 @@ class Header extends Component {
               <div className={cssSearchTitle}>単価</div>
               <div className={cssSearchInput}>
                 <TextField
-                  defaultValue="Bare"
+                  value={this.state.input}
                   margin="normal"
                   variant="outlined"
                   className={cssInput}
+                  onChange={this.handleChange("input")}
                 />
                 <div className={cssSearchInputLabel}>万円以上</div>
               </div>
@@ -148,7 +163,11 @@ class Header extends Component {
                 <Button onClick={this.toggleDrawer}>閉じる</Button>
               </div>
               <div className={cssSearchButton}>
-                <Button variant="contained" color="secondary">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => this.props.wp_search(this.state.input)}
+                >
                   検索
                   <SearchIcon />
                 </Button>

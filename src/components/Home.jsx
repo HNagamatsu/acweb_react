@@ -18,10 +18,6 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Avatar from "@material-ui/core/Avatar";
 import Divider from "@material-ui/core/Divider";
 import Chip from "@material-ui/core/Chip";
@@ -32,14 +28,34 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import TextField from "@material-ui/core/TextField";
 
+//icon
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ShareIcon from "@material-ui/icons/Share";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import RefreshIcon from "@material-ui/icons/Refresh";
+
 const media = "wp:featuredmedia";
 
 //components
 import Header from "components/Header";
+import Footer from "components/Footer";
 import SideBar from "components/SideBar";
+import Loading from "components/Loading";
 
 //css
-import { items, cardStyle, cardTitile, cardStatus } from "./home.css";
+require("../style.css");
+import {
+  items,
+  cardStyle,
+  cardTitile,
+  cardStatus,
+  cardContainer,
+  chips,
+  gridContainer
+} from "./home.css";
+import { secondary } from "./color.css";
+import { load } from "./load.css";
 
 class Home extends React.Component {
   getSnapshotBeforeUpdate(props) {
@@ -62,14 +78,10 @@ class Home extends React.Component {
     return (
       <div className="container">
         <Header {...this.props} />
-        <div>
-          <Grid
-            container
-            justify="center"
-            spacing={40}
-            style={{ paddingTop: 40, background: "#efefef" }}
-          >
-            <Grid>
+        {this.props.wpList.loading && <Loading />}
+        <div className={cardContainer}>
+          <Grid container justify="center">
+            <Grid className={gridContainer}>
               {this.props.wpList.data.length
                 ? this.props.wpList.data.map(item => (
                     <Card style={{ maxWidth: 800 }} className={cardStyle}>
@@ -78,7 +90,7 @@ class Home extends React.Component {
                           <CardHeader
                             title={item.title.rendered}
                             component="h3"
-                            classes={cardTitile}
+                            className={cardTitile}
                           />
                         </CardActionArea>
                       </Link>
@@ -93,52 +105,45 @@ class Home extends React.Component {
                                   component={Link}
                                   label={element.name}
                                   variant="outlined"
+                                  color="secondary"
+                                  className={chips}
                                 />
                               );
                             }
                           });
                         })}
-
-                        <div className={cardStatus}>
-                          {item.post_meta.price ? (
-                            <div className={cardStatus}>
-                              単価:
-                              {item.post_meta.price}
-                              万円～
-                            </div>
-                          ) : (
-                            ""
-                          )}
-
-                          <div className={cardStatus}>
-                            <PersonIcon />
-                            {this.props.wpJobs.data.map(element => {
-                              return item.job.map(job => {
-                                if (element.id === job) {
-                                  return (
-                                    <Link to={`/category/job/${element.id}`}>
-                                      {element.name}
-                                    </Link>
-                                  );
-                                }
-                              });
-                            })}
-                          </div>
-                          <div className={cardStatus}>
-                            <RoomIcon />
-
-                            {this.props.wpCategories.data.map(element => {
-                              if (element.id === item.tokyo[0]) {
-                                return (
-                                  <Link to={`/category/tokyo/${element.id}`}>
-                                    {element.name}
-                                  </Link>
-                                );
-                              }
-                            })}
-                          </div>
-                        </div>
-
+                        {this.props.wpJobs.data.map(element => {
+                          return item.job.map(job => {
+                            if (element.id === job) {
+                              return (
+                                <Chip
+                                  icon={<PersonIcon />}
+                                  to={`/category/job/${element.id}`}
+                                  component={Link}
+                                  label={element.name}
+                                  variant="outlined"
+                                  color="secondary"
+                                  className={chips}
+                                />
+                              );
+                            }
+                          });
+                        })}
+                        {this.props.wpCategories.data.map(element => {
+                          if (element.id === item.tokyo[0]) {
+                            return (
+                              <Chip
+                                icon={<RoomIcon />}
+                                to={`/category/tokyo/${element.id}`}
+                                component={Link}
+                                label={element.name}
+                                variant="outlined"
+                                color="secondary"
+                                className={chips}
+                              />
+                            );
+                          }
+                        })}
                         <Typography component="p">
                           {/* 記事抜粋 */}
                           <Typography>
@@ -157,6 +162,7 @@ class Home extends React.Component {
             </Grid>
           </Grid>
         </div>
+        <Footer {...this.props} />
       </div>
     );
   }
