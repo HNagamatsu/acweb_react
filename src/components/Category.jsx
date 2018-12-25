@@ -34,6 +34,7 @@ const media = "wp:featuredmedia";
 import Header from "components/Header";
 import Footer from "components/Footer";
 import Loading from "components/Loading";
+import Pager from "components/Pager";
 
 //css
 import {
@@ -52,8 +53,10 @@ class Category extends React.Component {
   getSnapshotBeforeUpdate(prevProps, prevState) {
     if (this.props.match.params !== prevProps.match.params) {
       this.props.wp_getCategoryPosts(this.props.match.params);
+      window.scrollTo(0, 0);
     }
   }
+
   componentDidMount() {
     console.log(this.props);
     this.props.wp_getCategoryPosts(this.props.match.params);
@@ -203,6 +206,16 @@ class Category extends React.Component {
             </Grid>
           </Grid>
         </div>
+        {this.props.wpList.totalPages && (
+          <Pager
+            path={`category/${this.props.match.params.slug}/${
+              this.props.match.params.id
+            }`}
+            total={this.props.wpList.total}
+            totalPages={this.props.wpList.totalPages}
+            page={this.props.match.params.page}
+          />
+        )}
         <Footer {...this.props} />
       </div>
     );

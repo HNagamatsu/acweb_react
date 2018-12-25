@@ -1,0 +1,39 @@
+.pagerContainer {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.pageButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+  width: 30px;
+  height: 20px;
+  border: solid 1px #868686;
+  border-radius: 3px;
+  padding: 7px;
+  font-size: 0.9em;
+  margin: 0 5px;
+  transition-duration: 0.3s;
+  opacity: 1;
+  &:visited {
+    color: #000;
+  }
+  &:active {
+    color: #000;
+  }
+  &:hover {
+    opacity: 0.5;
+    background: #ccc;
+  }
+  &.current {
+    background: #ccc;
+    color: #000;
+    &:hover {
+      opacity: 1;
+      background: #ccc;
+    }
+  }
+}

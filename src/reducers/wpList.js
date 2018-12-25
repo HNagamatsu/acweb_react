@@ -18,14 +18,14 @@ import {
 const initialState = {
   loading: false,
   error: null,
-  data: []
+  data: [],
+  total: null,
+  totalPages: null
 };
 
 const wpList = handleActions(
   {
     [WP_GET_LIST]: (state, action) => {
-      console.log("----- WP_GET_LIST --------");
-      console.log(action.payload, "WP_GET_LIST");
       return {
         ...state,
         data: [],
@@ -33,12 +33,11 @@ const wpList = handleActions(
       };
     },
     [WP_GET_LIST_SUCCESS]: (state, action) => {
-      console.log("----- WP_GET_LIST_SUCCESS --------");
-
-      console.log(action.payload);
       return {
         ...state,
         data: action.payload.data,
+        total: action.payload.total,
+        totalPages: action.payload.totalPages,
         loading: false
       };
     },
@@ -62,6 +61,8 @@ const wpList = handleActions(
       return {
         ...state,
         data: action.payload.data,
+        total: action.payload.total,
+        totalPages: action.payload.totalPages,
         loading: false
       };
     },
@@ -86,6 +87,8 @@ const wpList = handleActions(
       return {
         ...state,
         data: action.payload.data,
+        total: action.payload.total,
+        totalPages: action.payload.totalPages,
         loading: false
       };
     },

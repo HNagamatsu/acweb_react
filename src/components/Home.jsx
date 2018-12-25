@@ -42,6 +42,7 @@ import Header from "components/Header";
 import Footer from "components/Footer";
 import SideBar from "components/SideBar";
 import Loading from "components/Loading";
+import Pager from "components/Pager";
 
 //css
 require("../style.css");
@@ -58,11 +59,14 @@ import { secondary } from "./color.css";
 import { load } from "./load.css";
 
 class Home extends React.Component {
-  getSnapshotBeforeUpdate(props) {
-    console.log(props);
+  getSnapshotBeforeUpdate(prevProps) {
+    if (this.props.match.params.page !== prevProps.match.params.page) {
+      this.props.wp_getList(this.props.match.params.page);
+      window.scrollTo(0, 0);
+    }
   }
   componentDidMount() {
-    this.props.wp_getList();
+    this.props.wp_getList(this.props.match.params.page);
     this.props.wp_getCategories();
     this.props.wp_getSkills();
     this.props.wp_getJobs();
@@ -130,19 +134,21 @@ class Home extends React.Component {
                           });
                         })}
                         {this.props.wpCategories.data.map(element => {
-                          if (element.id === item.tokyo[0]) {
-                            return (
-                              <Chip
-                                icon={<RoomIcon />}
-                                to={`/category/tokyo/${element.id}`}
-                                component={Link}
-                                label={element.name}
-                                variant="outlined"
-                                color="secondary"
-                                className={chips}
-                              />
-                            );
-                          }
+                          return item.tokyo.map(tokyo => {
+                            if (element.id === tokyo) {
+                              return (
+                                <Chip
+                                  icon={<RoomIcon />}
+                                  to={`/category/tokyo/${element.id}`}
+                                  component={Link}
+                                  label={element.name}
+                                  variant="outlined"
+                                  color="secondary"
+                                  className={chips}
+                                />
+                              );
+                            }
+                          });
                         })}
                         <Typography component="p">
                           {/* 記事抜粋 */}
@@ -162,6 +168,14 @@ class Home extends React.Component {
             </Grid>
           </Grid>
         </div>
+        {this.props.wpList.totalPages && (
+          <Pager
+            total={this.props.wpList.total}
+            totalPages={this.props.wpList.totalPages}
+            page={this.props.match.params.page}
+          />
+        )}
+
         <Footer {...this.props} />
       </div>
     );

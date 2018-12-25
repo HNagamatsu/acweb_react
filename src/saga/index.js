@@ -49,8 +49,26 @@ const xhrRequest = axios.create({
 // リスト一覧取得
 function* handleGetList(action) {
   try {
-    const result = yield call(xhrRequest.get, action.payload.url);
-    yield put(wp_getSuccess(result));
+    console.log(action.payload.page);
+    const result = yield call(xhrRequest.get, action.payload.url, {
+      params: {
+        per_page: 5,
+        page: action.payload.page
+      }
+    });
+    //総投稿数
+    const total = result.headers["x-wp-total"];
+
+    //総ページ数
+    const totalPages = result.headers["x-wp-totalpages"];
+
+    yield put(
+      wp_getSuccess({
+        ...result,
+        total,
+        totalPages
+      })
+    );
   } catch (e) {
     console.log(e);
   }
@@ -69,9 +87,27 @@ function* handleSearch(action) {
   try {
     const result = yield call(
       xhrRequest.get,
-      action.type + action.payload.query
+      action.type + action.payload.query,
+      {
+        params: {
+          per_page: 5,
+          page: action.payload.page
+        }
+      }
     );
-    yield put(wp_searchSuccess(result));
+
+    //総投稿数
+    const total = result.headers["x-wp-total"];
+    //総ページ数
+    const totalPages = result.headers["x-wp-totalpages"];
+
+    yield put(
+      wp_searchSuccess({
+        ...result,
+        total,
+        totalPages
+      })
+    );
   } catch (e) {}
 }
 
@@ -80,10 +116,10 @@ function* handleGetCategories(action) {
     const result = yield call(xhrRequest.get, action.type, {
       params: {
         slug: action.payload.slug,
-        per_page: 30,
         parent: 34
       }
     });
+
     yield put(wp_getCategoriesSuccess(result));
   } catch (e) {
     console.log(e);
@@ -94,10 +130,30 @@ function* handleGetCategoryPosts(action) {
   try {
     const result = yield call(
       xhrRequest.get,
-
-      action.type + action.payload.slug + "=" + action.payload.id
+      action.type + action.payload.slug + "=" + action.payload.id,
+      {
+        params: {
+          per_page: 5,
+          page: action.payload.page
+        }
+      }
     );
-    yield put(wp_getCategoryPostsSuccess(result));
+    console.log(result.headers, "-----headers------");
+    //総投稿数
+    const total = result.headers["x-wp-total"];
+    console.log(total, "-----total------");
+
+    //総ページ数
+    const totalPages = result.headers["x-wp-totalpages"];
+    console.log(totalPages, "-----totalPages------");
+
+    yield put(
+      wp_getCategoryPostsSuccess({
+        ...result,
+        total,
+        totalPages
+      })
+    );
   } catch (e) {
     console.log(e);
   }
