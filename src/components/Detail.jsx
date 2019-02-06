@@ -43,6 +43,7 @@ import Divider from "@material-ui/core/Divider";
 import Header from "components/Header";
 import Footer from "components/Footer";
 import Loading from "components/Loading";
+import FormDialog from "components/FormDialog";
 
 const media = "wp:featuredmedia";
 
@@ -76,10 +77,23 @@ class Detail extends React.Component {
     this.props.wp_getSkills();
     this.props.wp_getJobs();
   }
+  state = {
+    isOpenDialog: false
+  };
+  handleCloseDialog = () => {
+    this.setState({
+      isOpenDialog: !this.state.isOpenDialog
+    });
+  };
+
   render() {
     console.log(this.props);
     return (
       <div className="container">
+        <FormDialog
+          isOpenDialog={this.state.isOpenDialog}
+          handleCloseDialog={this.handleCloseDialog}
+        />
         <Header {...this.props} />
         <div className={cardContainer}>
           <div className={breadcrumb}>
@@ -189,6 +203,7 @@ class Detail extends React.Component {
                       variant="contained"
                       color="secondary"
                       className={cssButton}
+                      onClick={this.handleCloseDialog}
                     >
                       <ChatIcon />
                       <span>話を聞いてみる</span>
